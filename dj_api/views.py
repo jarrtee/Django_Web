@@ -1,9 +1,11 @@
+import json
+
 from django.shortcuts import render
 from rest_framework import permissions, viewsets
-from .models import Dj_Api
+from .models import Dj_Api,User_Data
 from .serializers import Dj_ApiSerializer
 import mysql.connector
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 
 class Dj_ApiViewSet(viewsets.ModelViewSet):
@@ -11,10 +13,23 @@ class Dj_ApiViewSet(viewsets.ModelViewSet):
     serializer_class = Dj_ApiSerializer
 
 
+def User_Data_ViewSet(request):
+    if request.method == "POST":
+        UserNum = request.POST.get('username','')
+        datas = User_Data.objects.filter(UserNum=UserNum)
+        for data in datas:
+            UserName = data.UserName
+            PhoneNum = data.PhoneNum
+            Picture = data.Picture
+        return HttpResponse(json.dumps({
+                "status": datas,
+            }))
 
 
 
-#Create your views here
+
+
+
 db = mysql.connector.connect(
     host="localhost",
     user="root",

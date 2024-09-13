@@ -26,5 +26,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('login/', login),
-    path('data/', User_Data_ViewSet),
+    path('basicdata/', User_Data_ViewSet),
 ]

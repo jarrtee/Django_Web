@@ -11,9 +11,9 @@ class Dj_Api(models.Model):
         db_table = 'dj_api'
 
 
-#数据库数据
+#数据库数据(建表)
 class User_Data(models.Model):
-    UserNum = models.CharField(max_length=255)
+    UserNum = models.CharField(max_length=255, null=False)
     UserName = models.CharField(max_length=255)
     PhoneNum = models.IntegerField()
     Picture = models.ImageField()
@@ -22,4 +22,4 @@ class User_Data(models.Model):
         return f"['UserNum':{self.UserNum}, 'UserName':{self.UserName},'PhoneNum':{self.PhoneNum}, 'Picture':{self.Picture}]']"
 
     class Meta:
-        db_table = 'user_data'
+        db_table = 'user_basic_inf'

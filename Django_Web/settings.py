@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'Django_Web.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_connect',
         'HOST': 'localhost',
         'PORT': '3306',

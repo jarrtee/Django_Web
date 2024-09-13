@@ -1,8 +1,9 @@
 import json
 
+from django.core import serializers
 from django.shortcuts import render
 from rest_framework import permissions, viewsets
-from .models import Dj_Api,User_Data
+from .models import Dj_Api, User_Data
 from .serializers import Dj_ApiSerializer
 import mysql.connector
 from django.http import JsonResponse, HttpResponse
@@ -14,20 +15,21 @@ class Dj_ApiViewSet(viewsets.ModelViewSet):
 
 
 def User_Data_ViewSet(request):
-    if request.method == "POST":
-        UserNum = request.POST.get('username','')
-        datas = User_Data.objects.filter(UserNum=UserNum)
-        for data in datas:
-            UserName = data.UserName
-            PhoneNum = data.PhoneNum
-            Picture = data.Picture
-        return HttpResponse(json.dumps({
-                "status": datas,
-            }))
-
-
-
-
+    Alldata = []
+    # if request.method == "POST":
+    #     UserNum = request.POST.get('Username')
+    #     datas = User_Data.objects.filter(UserNum=UserNum)
+    #     for data in datas:
+    #         UserName = data.UserName
+    #         PhoneNum = data.PhoneNum
+    #         Picture = data.Picture
+    #         Alldata.append({'UserName': UserName, 'PhoneNum': PhoneNum, 'Picture': Picture})
+    # print('已进入后台')
+    # return HttpResponse(Alldata)
+    ALL_Data = User_Data.objects.all()
+    ALLData = serializers.serialize('json', ALL_Data) #转化成JSON格式输出
+    # Data_view = [{"UserNum": data.UserNum, "UserName": data.UserName, "PhoneNum": data.PhoneNum, "Picture": data.Picture} for data in ALLData]
+    return JsonResponse(ALLData, safe=False)
 
 
 db = mysql.connector.connect(

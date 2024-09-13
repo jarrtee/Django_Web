@@ -16,20 +16,12 @@ class Dj_ApiViewSet(viewsets.ModelViewSet):
 
 def User_Data_ViewSet(request):
     Alldata = []
-    # if request.method == "POST":
-    #     UserNum = request.POST.get('Username')
-    #     datas = User_Data.objects.filter(UserNum=UserNum)
-    #     for data in datas:
-    #         UserName = data.UserName
-    #         PhoneNum = data.PhoneNum
-    #         Picture = data.Picture
-    #         Alldata.append({'UserName': UserName, 'PhoneNum': PhoneNum, 'Picture': Picture})
-    # print('已进入后台')
-    # return HttpResponse(Alldata)
-    ALL_Data = User_Data.objects.all()
-    ALLData = serializers.serialize('json', ALL_Data) #转化成JSON格式输出
-    # Data_view = [{"UserNum": data.UserNum, "UserName": data.UserName, "PhoneNum": data.PhoneNum, "Picture": data.Picture} for data in ALLData]
-    return JsonResponse(ALLData, safe=False)
+    if request.method == "GET":
+        UserNum = request.GET['UserNum']
+        ALL_Data = User_Data.objects.filter(UserNum=UserNum)
+        ALLData = serializers.serialize('json', ALL_Data)  #转化成JSON格式输出
+        Alldata.append(ALLData)
+    return HttpResponse(Alldata)
 
 
 db = mysql.connector.connect(

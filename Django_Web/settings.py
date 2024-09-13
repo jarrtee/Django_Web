@@ -55,6 +55,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Django_Web.urls'
 CORS_ORIGIN_ALLOW_ALL = True
+# APPEND_SLASH = False
 
 TEMPLATES = [
     {

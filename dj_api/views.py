@@ -16,7 +16,7 @@ class Dj_ApiViewSet(viewsets.ModelViewSet):
 
 def User_Data_ViewSet(request):
     Alldata = []
-    if request.method == "GET":
+    if request.method == "POST":
         UserNum = request.GET['UserNum']
         ALL_Data = User_Data.objects.filter(UserNum=UserNum)
         ALLData = serializers.serialize('json', ALL_Data)  #转化成JSON格式输出
@@ -60,3 +60,4 @@ def login(request):
                 return JsonResponse({'code': 1002, 'msg': 'No'})
     else:
         return JsonResponse({'code': 1003, 'msg': 'invalid request'})
+

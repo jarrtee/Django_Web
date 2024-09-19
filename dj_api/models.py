@@ -23,3 +23,14 @@ class User_Data(models.Model):
 
     class Meta:
         db_table = 'user_basic_inf'
+
+
+class User_Photo(models.Model):
+    UserNum = models.CharField(max_length=255, null=False)
+    Photo = models.ImageField()
+
+    def __str__(self):
+        return f"['UserNum':{self.UserNum}'Photo':{self.Picture}]']"
+
+    class Meta:
+        db_table = 'user_basic_photo'

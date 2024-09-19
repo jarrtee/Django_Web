@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from dj_api.views import Dj_ApiViewSet, login, User_Data_ViewSet
+from dj_api.views import Dj_ApiViewSet, login, User_Data_ViewSet,User_Photo_ViewSet
 
 router = routers.DefaultRouter()
 router.register(r'dj_api', Dj_ApiViewSet)
@@ -27,4 +27,5 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('login/', login),
     path('basicdata/', User_Data_ViewSet),
+    path('basicphoto/', User_Photo_ViewSet),
 ]

@@ -1,9 +1,10 @@
+import base64
 import json
 
 from django.core import serializers
 from django.shortcuts import render
 from rest_framework import permissions, viewsets
-from .models import Dj_Api, User_Data
+from .models import Dj_Api, User_Data, User_Photo
 from .serializers import Dj_ApiSerializer
 import mysql.connector
 from django.http import JsonResponse, HttpResponse
@@ -22,6 +23,17 @@ def User_Data_ViewSet(request):
         ALLData = serializers.serialize('json', ALL_Data)  #转化成JSON格式输出
         Alldata.append(ALLData)
     return HttpResponse(Alldata)
+
+
+def User_Photo_ViewSet(request):
+    blob_list = []
+    if request.method == "POST":
+        UserNum = request.GET['UserNum']
+        query = "select Photo from user_basic_photo where UserNum=%s"
+        cursor.execute(query, (UserNum,))
+        blob_data = cursor.fetchone()[0]
+        blob_list.append(blob_data)
+    return HttpResponse(blob_list[0])
 
 
 db = mysql.connector.connect(
@@ -60,4 +72,3 @@ def login(request):
                 return JsonResponse({'code': 1002, 'msg': 'No'})
     else:
         return JsonResponse({'code': 1003, 'msg': 'invalid request'})
-

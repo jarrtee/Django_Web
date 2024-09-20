@@ -15,6 +15,7 @@ class Dj_ApiViewSet(viewsets.ModelViewSet):
     serializer_class = Dj_ApiSerializer
 
 
+#获取基本信息
 def User_Data_ViewSet(request):
     Alldata = []
     if request.method == "POST":
@@ -25,6 +26,7 @@ def User_Data_ViewSet(request):
     return HttpResponse(Alldata)
 
 
+#获取头像
 def User_Photo_ViewSet(request):
     blob_list = []
     if request.method == "POST":
@@ -34,6 +36,17 @@ def User_Photo_ViewSet(request):
         blob_data = cursor.fetchone()[0]
         blob_list.append(blob_data)
     return HttpResponse(blob_list[0])
+
+
+#修改基本信息
+def update_data_view(request):
+    if request.method == "POST":
+        UserNum = request.GET['UserNum']
+        UserName = request.GET['UserName']
+        query = "update user_basic_inf set UserName=%s where UserNum=%s"
+        cursor.execute(query, (UserName,UserNum))
+        db.commit()#提交事务
+    return HttpResponse('Update fine')
 
 
 db = mysql.connector.connect(

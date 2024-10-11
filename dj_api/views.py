@@ -44,8 +44,8 @@ def update_data_view(request):
         UserNum = request.GET['UserNum']
         UserName = request.GET['UserName']
         query = "update user_basic_inf set UserName=%s where UserNum=%s"
-        cursor.execute(query, (UserName,UserNum))
-        db.commit()#提交事务
+        cursor.execute(query, (UserName, UserNum))
+        db.commit()  #提交事务
     return HttpResponse('Update fine')
 
 

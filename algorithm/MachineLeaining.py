@@ -4,7 +4,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
 
-if __name__ == '__main__':
+#线性回归
+def linear_regression():
     # 示例数据集
     # X为特征，y为目标变量
     X = np.array([[1, 1], [1, 2], [2, 3], [2, 4], [3, 5], [4, 6]])
@@ -27,3 +28,8 @@ if __name__ == '__main__':
     # 输出模型的参数
     print("Model intercept:", model.intercept_)
     print("Model coefficients:", model.coef_)
+
+
+if __name__ == '__main__':
+    nums = [7, 1, 5, 3, 6, 4]
+    

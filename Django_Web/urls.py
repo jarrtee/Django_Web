@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from dj_api.views import Dj_ApiViewSet, login, User_Data_ViewSet,User_Photo_ViewSet,update_data_view
+from dj_api.views import Dj_ApiViewSet, login, User_Data_ViewSet,User_Photo_ViewSet,update_data_view,WX_Login,WX_Basic_inf
 
 router = routers.DefaultRouter()
 router.register(r'dj_api', Dj_ApiViewSet)
@@ -29,4 +29,6 @@ urlpatterns = [
     path('basicdata/', User_Data_ViewSet),
     path('basicphoto/', User_Photo_ViewSet),
     path('UpdateBasicData/', update_data_view),
+    path('WX_Login/', WX_Login),
+    path('WX_Basic_inf/', WX_Basic_inf),
 ]

@@ -1,6 +1,8 @@
 import base64
 import json
 
+import pymssql
+import pymysql
 from django.core import serializers
 from django.shortcuts import render
 from rest_framework import permissions, viewsets
@@ -58,6 +60,46 @@ db = mysql.connector.connect(
 )
 #create cursor object
 cursor = db.cursor()
+
+dbmssql = pymssql.connect(
+    host="10.100.50.211",
+    user="sa",
+    password="ABCabc123#@!",
+    database="Points",
+    port="1433",
+    tds_version="7.0",
+    as_dict=True,  #数据库内容以字典格式输出,带字段名
+    charset='GBK',  #解决中文乱码
+)
+cursorWX = dbmssql.cursor()
+cursorWX1 = dbmssql.cursor()
+
+
+def WX_Login(request):
+    result_list = []
+    if request.method == "POST":
+        UserNum = request.GET['UserNum']
+        if str(UserNum) == '':
+            return JsonResponse({'code': 1001, 'msg': 'id can\'t be empty'})
+        query = "select hr_code from v_employee where hr_code=%s"
+        cursorWX.execute(query, UserNum)
+        result = cursorWX.fetchall()
+        for i in result:
+            result_list.append(i)
+    return HttpResponse(result_list)
+
+
+def WX_Basic_inf(request):
+    result_list = []
+    if request.method == "GET":
+        query = "select * from gifts_file"
+        cursorWX1.execute(query)
+        #desc = cursorWX1.description  #获取字段的描述
+        result = cursorWX1.fetchall()
+        for res in result:
+            result_list.append(res)
+        #result_list.append({f"g_id:{i[0]},g_no:{i[1]},g_gfname:{i[2]},g_note:{i[3]},g_mark:{i[4]},g_sort:{i[5]},g_date:{i[6]},g_subname:{i[7]},g_img:{i[8]},g_filename:{i[9]},g_qty:{i[10]}"})
+    return HttpResponse(result_list)
 
 
 def verify_login(Username, password):

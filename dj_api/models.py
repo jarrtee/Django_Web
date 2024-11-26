@@ -30,7 +30,7 @@ class User_Photo(models.Model):
     Photo = models.ImageField()
 
     def __str__(self):
-        return f"['UserNum':{self.UserNum}'Photo':{self.Picture}]']"
+        return f"['UserNum':{self.UserNum}'Photo':{self.Photo}]']"
 
     class Meta:
         db_table = 'user_basic_photo'

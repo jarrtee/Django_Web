@@ -1,5 +1,6 @@
 import base64
 import json
+import random
 
 import pymssql
 import pymysql
@@ -69,10 +70,11 @@ dbmssql = pymssql.connect(
     port="1433",
     tds_version="7.0",
     as_dict=True,  #数据库内容以字典格式输出,带字段名
-    charset='GBK',  #解决中文乱码
+    #charset='GBK',  #解决中文乱码
 )
 cursorWX = dbmssql.cursor()
 cursorWX1 = dbmssql.cursor()
+cursorWX2 = dbmssql.cursor()
 
 
 def WX_Login(request):
@@ -86,20 +88,33 @@ def WX_Login(request):
         result = cursorWX.fetchall()
         for i in result:
             result_list.append(i)
-    return HttpResponse(result_list)
+    array = json.dumps(result_list)
+    return HttpResponse(array, content_type="application/json")
 
 
 def WX_Basic_inf(request):
     result_list = []
     if request.method == "GET":
-        query = "select * from gifts_file"
+        query = "select id as id,g_gfname as name,g_mark as mark,g_sort as sort,g_img as img,g_qty as qty from gifts_file"
         cursorWX1.execute(query)
-        #desc = cursorWX1.description  #获取字段的描述
-        result = cursorWX1.fetchall()
-        for res in result:
-            result_list.append(res)
-        #result_list.append({f"g_id:{i[0]},g_no:{i[1]},g_gfname:{i[2]},g_note:{i[3]},g_mark:{i[4]},g_sort:{i[5]},g_date:{i[6]},g_subname:{i[7]},g_img:{i[8]},g_filename:{i[9]},g_qty:{i[10]}"})
-    return HttpResponse(result_list)
+        rows = cursorWX1.fetchall()
+        for i in rows:
+            result_list.append(i)
+    array = json.dumps(str(result_list))
+    return HttpResponse(array, content_type="application/json")
+
+
+def WX_USER_MARK(request):
+    result_list = []
+    if request.method == "GET":
+        UserNum = request.GET['UserNum']
+        query = "select * from emp_sumPoints where ep_code=%s"
+        cursorWX2.execute(query, UserNum)
+        result = cursorWX2.fetchall()
+        for i in result:
+            result_list.append(i)
+    array = json.dumps(result_list)
+    return HttpResponse(array, content_type="application/json")
 
 
 def verify_login(Username, password):

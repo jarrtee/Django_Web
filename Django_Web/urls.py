@@ -20,7 +20,7 @@ from rest_framework import routers
 from dj_api.views import Dj_ApiViewSet, login, User_Data_ViewSet,User_Photo_ViewSet,update_data_view,WX_Login,WX_Basic_inf,WX_USER_MARK
 
 router = routers.DefaultRouter()
-router.register(r'dj_api', Dj_ApiViewSet)
+router.register(r'dj_api', Dj_ApiViewSet)#注册视图集
 
 urlpatterns = [
     path('admin/', admin.site.urls),

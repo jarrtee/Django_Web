@@ -113,7 +113,7 @@ def WX_USER_MARK(request):
         result = cursorWX2.fetchall()
         for i in result:
             result_list.append(i)
-    array = json.dumps(result_list)
+    array = json.dumps(result_list) 
     return HttpResponse(array, content_type="application/json")
 
 
